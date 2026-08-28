@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Card, Kpi } from '../components/Card'
 import { StatusPill } from '../components/StatusPill'
 import { ErrorBanner } from '../components/FormKit'
@@ -8,7 +9,14 @@ const numberFmt = new Intl.NumberFormat('fr-FR')
 const today = new Date().toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
 
 export function Dashboard() {
-  const { data, error, loading, refresh } = useStock()
+  const { data, error, loading, refresh } = useStock(30_000)
+  const [refreshing, setRefreshing] = useState(false)
+
+  async function handleRefresh() {
+    setRefreshing(true)
+    await refresh()
+    setRefreshing(false)
+  }
 
   if (loading && !data) {
     return <p className="text-ink-muted">Chargement du stock…</p>
@@ -55,7 +63,16 @@ export function Dashboard() {
     <div>
       <div className="mb-6 flex flex-wrap items-baseline justify-between gap-2">
         <h1 className="font-display text-[26px] font-semibold">État du stock</h1>
-        <div className="text-[13px] text-ink-muted capitalize">{today} · mis à jour en temps réel</div>
+        <div className="flex items-center gap-3 text-[13px] text-ink-muted capitalize">
+          <span>{today} · lecture directe depuis Airtable</span>
+          <button
+            onClick={handleRefresh}
+            disabled={refreshing}
+            className="normal-case text-red hover:text-red-strong font-semibold disabled:opacity-50"
+          >
+            {refreshing ? 'Actualisation…' : 'Actualiser'}
+          </button>
+        </div>
       </div>
 
       {criticalCount > 0 && (
