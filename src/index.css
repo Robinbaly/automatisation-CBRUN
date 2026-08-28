@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap');
+@import "tailwindcss";
+
+:root {
+  --bg: #faf6f3;
+  --surface: #ffffff;
+  --surface-2: #fbefec;
+  --ink: #241715;
+  --ink-muted: #8a7570;
+  --border: #ecdfdb;
+
+  --red: #a81330;
+  --red-strong: #6f0c21;
+  --red-soft: #f4dee1;
+
+  --ok: #1f7a4d;
+  --ok-soft: #dff3e6;
+  --warn: #a6660a;
+  --warn-soft: #fbead2;
+  --crit: #c81e3a;
+  --crit-soft: #fbe1e4;
+
+  --shadow-card: 0 1px 2px rgba(36, 23, 21, 0.06), 0 8px 24px -12px rgba(36, 23, 21, 0.18);
+}
+
+@theme {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-border: var(--border);
+
+  --color-red: var(--red);
+  --color-red-strong: var(--red-strong);
+  --color-red-soft: var(--red-soft);
+
+  --color-ok: var(--ok);
+  --color-ok-soft: var(--ok-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --color-crit: var(--crit);
+  --color-crit-soft: var(--crit-soft);
+
+  --font-display: "Fraunces", Georgia, serif;
+  --font-sans: "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+.num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.card-shadow {
+  box-shadow: var(--shadow-card);
+}
