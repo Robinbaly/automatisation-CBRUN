@@ -27,14 +27,10 @@ export function Login({ onLoggedIn }: { onLoggedIn: () => void }) {
   return (
     <div className="flex min-h-screen items-center justify-center bg-bg px-4">
       <form onSubmit={submit} className="card-shadow w-full max-w-sm rounded-2xl border border-border bg-surface p-8">
-        <div className="mb-6 flex items-center gap-3">
-          <div className="font-display flex h-10 w-10 items-center justify-center rounded-lg bg-red-strong text-base font-semibold text-white">
-            CB
-          </div>
-          <div>
-            <div className="font-display text-lg leading-tight font-semibold">CB-RUN</div>
-            <div className="text-xs tracking-wide text-ink-muted uppercase">Stock</div>
-          </div>
+        <div className="mb-6 flex flex-col items-center text-center">
+          <img src="/logo-192.png" alt="CB-RUN" className="mb-3 h-16 w-16 object-contain" />
+          <div className="font-display text-lg leading-tight font-semibold">CB-RUN</div>
+          <div className="text-xs tracking-wide text-ink-muted uppercase">Stock</div>
         </div>
 
         {error && <ErrorBanner message={error} />}
