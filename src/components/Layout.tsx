@@ -37,15 +37,19 @@ export function Layout({ onLoggedOut }: { onLoggedOut: () => void }) {
   return (
     <div className="flex min-h-screen flex-col md:flex-row">
       {/* Mobile top bar */}
-      <header className="flex items-center justify-between bg-red-strong px-3 py-2.5 text-white md:hidden">
-        <Brand />
+      <header className="relative flex flex-col items-center gap-1.5 bg-red-strong px-3 py-3 text-white md:hidden">
         <button
           onClick={() => setNavOpen(true)}
           aria-label="Ouvrir le menu"
-          className="flex h-9 w-9 items-center justify-center rounded-lg text-xl hover:bg-white/10"
+          className="absolute top-1/2 left-3 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-lg text-xl hover:bg-white/10"
         >
           ☰
         </button>
+        <div className="text-center leading-tight">
+          <span className="font-display text-[15px] font-semibold">CB-RUN</span>{' '}
+          <span className="text-[10.5px] tracking-wide text-white/65 uppercase">Stock</span>
+        </div>
+        <img src="/logo-192.png" alt="CB-RUN" className="h-10 w-10 object-contain" />
       </header>
 
       {/* Backdrop for mobile drawer */}
@@ -58,8 +62,8 @@ export function Layout({ onLoggedOut }: { onLoggedOut: () => void }) {
       )}
 
       <aside
-        className={`fixed inset-y-0 left-0 z-40 flex w-[224px] flex-none translate-x-[-100%] flex-col gap-6 bg-red-strong p-3.5 text-white transition-transform duration-200 md:static md:translate-x-0 ${
-          navOpen ? 'translate-x-0' : ''
+        className={`fixed inset-y-0 left-0 z-40 flex w-[224px] flex-none flex-col gap-6 bg-red-strong p-3.5 text-white transition-transform duration-200 md:static md:translate-x-0 ${
+          navOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         <div className="hidden md:block">
