@@ -17,6 +17,7 @@ export type VracItem = {
 export type VarianteItem = {
   id: string
   libelle: string
+  categorie: string
   statut: string
   produitMaitreId?: string
   produitMaitreNom?: string

@@ -25,6 +25,7 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
         fields: [
           'Libellé',
           'Produit maître',
+          'Catégorie',
           'Statut',
           'Grammage (g)',
           'Stock Sachets Actuel',
@@ -67,6 +68,7 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
       return {
         id: r.id,
         libelle: str(r.fields['Libellé']),
+        categorie: str((r.fields['Catégorie'] as { name?: string })?.name),
         statut: str((r.fields['Statut'] as { name?: string })?.name),
         produitMaitreId,
         produitMaitreNom: produitMaitreId ? vracNameById.get(produitMaitreId) : undefined,

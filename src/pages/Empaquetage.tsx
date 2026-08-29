@@ -22,6 +22,14 @@ export function Empaquetage() {
 
   const variante = useMemo(() => data?.variantes.find((v) => v.id === varianteId), [data, varianteId])
 
+  const variantesEmpaquetables = useMemo(
+    () =>
+      (data?.variantes ?? []).filter(
+        (v) => (v.categorie === 'Fleur' || v.categorie === 'Résine') && v.statut === 'Actif',
+      ),
+    [data],
+  )
+
   const sachetsTheoriques =
     variante?.grammage && typeof poidsVracUtiliseG === 'number' ? Math.floor(poidsVracUtiliseG / variante.grammage) : undefined
   const ecartG =
@@ -82,7 +90,7 @@ export function Empaquetage() {
             <Field label="Référence (sachet à produire)">
               <Select value={varianteId} onChange={(e) => setVarianteId(e.target.value)} disabled={loading}>
                 <option value="">— Sélectionner —</option>
-                {data?.variantes.map((v) => (
+                {variantesEmpaquetables.map((v) => (
                   <option key={v.id} value={v.id}>
                     {v.libelle}
                     {v.produitMaitreNom ? ` — vrac source : ${v.produitMaitreNom}` : ''}
