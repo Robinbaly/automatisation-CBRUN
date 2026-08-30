@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { ErrorBanner, Field, FormShell, Input, PrimaryButton, Row2, Select, SideStat, SuccessBanner } from '../components/FormKit'
 import { PageHead } from './Reception'
 import { useStock } from '../hooks/useStock'
@@ -11,6 +11,14 @@ function today() {
 export function Etiquetage() {
   const { data, loading, error: stockError } = useStock()
   const [varianteId, setVarianteId] = useState('')
+
+  const variantesEtiquetables = useMemo(
+    () =>
+      (data?.variantes ?? []).filter(
+        (v) => (v.categorie === 'Fleur' || v.categorie === 'Résine') && v.statut === 'Actif',
+      ),
+    [data],
+  )
   const [formatKraftId, setFormatKraftId] = useState('')
   const [nombre, setNombre] = useState<number | ''>('')
   const [date, setDate] = useState(today())
@@ -69,7 +77,7 @@ export function Etiquetage() {
             <Field label="Référence concernée">
               <Select value={varianteId} onChange={(e) => setVarianteId(e.target.value)} disabled={loading}>
                 <option value="">— Sélectionner —</option>
-                {data?.variantes.map((v) => (
+                {variantesEtiquetables.map((v) => (
                   <option key={v.id} value={v.id}>
                     {v.libelle}
                   </option>
