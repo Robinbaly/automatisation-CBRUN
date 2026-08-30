@@ -12,8 +12,8 @@ const NAV = [
 
 function Brand() {
   return (
-    <div className="flex items-center gap-2.5 px-2">
-      <div className="flex h-9 w-9 flex-none items-center justify-center rounded-lg bg-white/95 p-1">
+    <div className="flex flex-col items-center gap-2 px-2 text-center">
+      <div className="flex h-16 w-16 flex-none items-center justify-center rounded-xl bg-white p-2 shadow-sm">
         <img src="/logo-192.png" alt="" className="h-full w-full object-contain" />
       </div>
       <div>
@@ -49,7 +49,9 @@ export function Layout({ onLoggedOut }: { onLoggedOut: () => void }) {
           <span className="font-display text-[15px] font-semibold">CB-RUN</span>{' '}
           <span className="text-[10.5px] tracking-wide text-white/65 uppercase">Stock</span>
         </div>
-        <img src="/logo-192.png" alt="CB-RUN" className="h-10 w-10 object-contain" />
+        <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-white p-2 shadow-sm">
+          <img src="/logo-192.png" alt="CB-RUN" className="h-full w-full object-contain" />
+        </div>
       </header>
 
       {/* Backdrop for mobile drawer */}
