@@ -56,8 +56,8 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
     const vrac = vracRecords.map((r) => ({
       id: r.id,
       nom: str(r.fields['Produit maître']),
-      categorie: str((r.fields['Catégorie'] as { name?: string })?.name),
-      statutGlobal: str((r.fields['Statut global'] as { name?: string })?.name),
+      categorie: str(r.fields['Catégorie']),
+      statutGlobal: str(r.fields['Statut global']),
       stockActuel: num(r.fields['Stock Vrac Actuel (g)']),
       seuilCritique: num(r.fields['Seuil Critique Vrac (g)']),
       statut: str(r.fields['Statut Stock Vrac']),
@@ -68,8 +68,8 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
       return {
         id: r.id,
         libelle: str(r.fields['Libellé']),
-        categorie: str((r.fields['Catégorie'] as { name?: string })?.name),
-        statut: str((r.fields['Statut'] as { name?: string })?.name),
+        categorie: str(r.fields['Catégorie']),
+        statut: str(r.fields['Statut']),
         produitMaitreId,
         produitMaitreNom: produitMaitreId ? vracNameById.get(produitMaitreId) : undefined,
         grammage: num(r.fields['Grammage (g)']),
