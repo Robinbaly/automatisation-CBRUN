@@ -1,7 +1,8 @@
 # Prime Agent bloque au démarrage sur Windows (MSI)
 
-Statut : **non résolu, mais cause probable identifiée + contournement à tester**.
-Ouvert le : 27/08/2026. Dernière mise à jour : 28/08/2026.
+Statut : **bug upstream confirmé, non corrigé par l'éditeur — contournement
+requis (voir "Décision finale" plus bas)**.
+Ouvert le : 27/08/2026. Dernière mise à jour : 01/09/2026.
 
 ## Contexte
 
@@ -166,24 +167,64 @@ bug est bien localisé dans le chemin de code du mode interactif (TUI plein
 upstream — au prix de perdre la session interactive continue (chaque appel
 `-p` est one-shot).
 
-## Prochaines pistes si `--print` échoue aussi
+## Confirmation upstream du 01/09/2026 — bug connu, fermé "not planned"
 
-- **Tester en administrateur** — un named pipe créé sous un niveau
-  d'intégrité différent peut être injoignable sans erreur explicite.
-- **Chercher les issues GitHub de Prime Agent** pour `worker_auth`,
-  `isTTY`, `resolveAppMode`, `fullscreen`, `Windows` (outil encore en
-  v0.8.x, bug connu probable plutôt que problème de config local — le fait
-  que le mode headless fonctionne à 100% pointe vers un bug interne au
-  chemin TUI, pas vers l'environnement Windows en général).
-- **Réinstallation propre en dernier recours** :
-  ```powershell
-  npm uninstall -g prime-agent
-  Remove-Item -Recurse -Force $env:USERPROFILE\.prime
-  npm install -g prime-agent
-  ```
+Recherche dans les issues GitHub officielles de Prime Agent
+(`PrimeIntellect-ai/prime-agent`) : le bug est déjà rapporté et documenté
+par un autre utilisateur.
+
+**[Issue #1923](https://github.com/PrimeIntellect-ai/prime-agent/issues/1923)
+— "Windows: daemon worker-auth handshake times out after first session
+(worker listens but never authenticates)"**, ouverte le 31/08/2026 par
+`Earth4Willi`, symptôme identique au nôtre (Windows 11, timeout 30s sur
+`worker_auth`, worker qui écoute mais superviseur qui ne reçoit jamais
+`daemon_hello`).
+
+Diagnostic de l'auteur de l'issue (recoupe exactement notre piste n°2
+ci-dessus) : le protocole de framing binaire (`PrivateFramedChannel`) sur
+named pipe Windows serait le point de blocage, avec une boucle de retry
+serrée (500ms → 1000ms → 1000ms) qui pourrait laisser des connexions de pipe
+à moitié ouvertes. Un bug secondaire non-fatal est aussi mentionné :
+`CommandRecoveryJournal.compact()` appelle `fsyncSync()` sur des handles de
+répertoire, ce qui cause des erreurs `EPERM` sous Windows.
+
+**Statut de l'issue : fermée "not planned" le 31/08/2026** — aucun
+correctif ni contournement fourni par les mainteneurs. Autrement dit, le
+support natif de Prime Agent en mode interactif (TUI) sous Windows est
+cassé et ne sera **pas** réparé côté éditeur dans un futur proche.
+
+Ceci confirme notre diagnostic du 28/08 : ce n'est pas un problème de
+configuration locale (Defender, OneDrive, EDR, Python, versions concurrentes
+— tout ça a été écarté à raison), c'est un bug interne à Prime Agent, propre
+à Windows natif.
+
+## Décision finale
+
+Deux options, par ordre de préférence :
+
+1. **Faire tourner Prime Agent sous WSL (Windows Subsystem for Linux)**,
+   plutôt qu'en Windows natif. Le bug est spécifique au named pipe +
+   TTY Win32 ; sous WSL, Prime Agent tourne dans un vrai environnement
+   Linux (TTY POSIX standard), donc hors du chemin de code défaillant.
+   C'est l'option qui permet de garder la session interactive complète.
+   - Installer WSL (`wsl --install` en admin si pas déjà fait), puis
+     réinstaller Node.js + Prime Agent **à l'intérieur** de la distribution
+     WSL (pas depuis Windows) : `curl -fsSL
+     https://app.primeintellect.ai/prime-agent/install.sh | sh`.
+   - Le dossier de travail `C:\Users\cbrun\OneDrive\Documents\automatisation-CBRUN`
+     reste accessible depuis WSL via `/mnt/c/Users/cbrun/OneDrive/Documents/automatisation-CBRUN`.
+2. **Rester en mode headless (`--print`) sous Windows natif**, en dernier
+   recours si WSL n'est pas envisageable — perd la session interactive
+   continue, chaque appel `-p "..."` est one-shot.
+
+**Non retenu** : réinstallation propre (déjà écarté comme piste, le bug
+étant confirmé upstream et non lié à l'état local) ; attendre un correctif
+éditeur (l'issue est fermée "not planned", pas de délai annoncé).
 
 ## Objectif
 
-Identifier la cause racine du timeout `worker_auth` en mode interactif et
-faire fonctionner `prime-agent` de façon stable dans ce dossier, avant de
-connecter le provider (Claude Pro ou Codex) via `/login`.
+~~Identifier la cause racine du timeout `worker_auth` en mode interactif~~
+→ Cause racine confirmée (bug upstream #1923, Windows natif uniquement).
+Prochaine étape : faire tourner `prime-agent` de façon stable via WSL dans
+ce dossier, avant de connecter le provider (Claude Pro ou Codex) via
+`/login`.

@@ -41,8 +41,9 @@ redirige ce dossier connu, mais en ligne de commande il faut bien passer par
 - Python 3.14.7 (installé via python.org le 27/08/2026 — ne pas confondre
   avec l'ancien faux raccourci Microsoft Store `WindowsApps\python.exe`,
   toujours présent mais à ignorer)
-- Prime Agent (Prime Intellect) — installé mais en panne, voir
-  `docs/troubleshooting/prime-agent-windows.md`
+- Prime Agent (Prime Intellect) — installé mais cassé en mode interactif
+  natif Windows (bug upstream confirmé, non corrigé, voir
+  `docs/troubleshooting/prime-agent-windows.md`). À réinstaller sous WSL.
 - MCP connectés dans Claude Code : Firecrawl, Playwright (scope local),
   Airtable, Canva, Dropbox, Gmail, Google Drive, Jotform, Make (via claude.ai)
 
