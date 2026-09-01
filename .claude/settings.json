@@ -8,7 +8,9 @@
     "shippo@claude-plugins-official": true,
     "security-guidance@claude-plugins-official": true,
     "semgrep@claude-plugins-official": true,
-    "legalzoom@claude-plugins-official": true
+    "legalzoom@claude-plugins-official": true,
+    "posthog@claude-plugins-official": true,
+    "cloudinary@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "superpowers-dev": {
