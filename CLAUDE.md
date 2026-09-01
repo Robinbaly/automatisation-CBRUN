@@ -41,9 +41,11 @@ redirige ce dossier connu, mais en ligne de commande il faut bien passer par
 - Python 3.14.7 (installé via python.org le 27/08/2026 — ne pas confondre
   avec l'ancien faux raccourci Microsoft Store `WindowsApps\python.exe`,
   toujours présent mais à ignorer)
-- Prime Agent (Prime Intellect) — installé mais cassé en mode interactif
-  natif Windows (bug upstream confirmé, non corrigé, voir
-  `docs/troubleshooting/prime-agent-windows.md`). À réinstaller sous WSL.
+- Prime Agent (Prime Intellect) — cassé en natif Windows (bug upstream
+  confirmé, non corrigé), **résolu via WSL** (Ubuntu) le 01/09/2026, voir
+  `docs/troubleshooting/prime-agent-windows.md`. Installé sous WSL,
+  lancer avec `prime-agent` depuis un terminal Ubuntu, dossier de travail
+  accessible via `/mnt/c/Users/cbrun/OneDrive/Documents/automatisation-CBRUN`.
 - MCP connectés dans Claude Code : Firecrawl, Playwright (scope local),
   Airtable, Canva, Dropbox, Gmail, Google Drive, Jotform, Make (via claude.ai)
 

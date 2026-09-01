@@ -1,8 +1,46 @@
 # Prime Agent bloque au démarrage sur Windows (MSI)
 
-Statut : **bug upstream confirmé, non corrigé par l'éditeur — contournement
-requis (voir "Décision finale" plus bas)**.
+Statut : **résolu via WSL** — contournement confirmé fonctionnel le
+01/09/2026. `prime-agent` démarre normalement sous WSL (Ubuntu) dans
+`/mnt/c/Users/cbrun/OneDrive/Documents/automatisation-CBRUN`, aucun timeout
+`worker_auth`, écran de login Prime Intellect atteint directement.
 Ouvert le : 27/08/2026. Dernière mise à jour : 01/09/2026.
+
+## Résolution confirmée (01/09/2026)
+
+Exécution du runbook WSL ci-dessous en local sur le MSI. Points notés
+pendant l'exécution, pour la prochaine fois :
+
+- `wsl --install -d Ubuntu` a nécessité `wsl --update` implicite (le
+  message de version affiché par défaut n'était pas à jour) — s'est
+  résolu tout seul via `wsl --install -d Ubuntu` directement.
+- Après redémarrage, la création de l'utilisateur Unix (`cbruning`) : le
+  mot de passe tapé ne s'affiche jamais (ni astérisques), c'est normal.
+- ⚠️ Piège : WSL hérite du `PATH` Windows par défaut. Avant l'installation
+  Linux de Prime Agent, `which prime-agent` pointait encore vers
+  `/mnt/c/Users/cbrun/AppData/Roaming/npm/prime-agent` (l'installation
+  Windows cassée), donc bien vérifier `which prime-agent` après
+  installation pour confirmer qu'il résout vers le chemin nvm Linux
+  (`/home/cbruning/.nvm/versions/node/v22.23.2/bin/prime-agent`), pas vers
+  `/mnt/c/...`.
+- ⚠️ Piège terminal : cliquer dans la fenêtre `wsl.exe` classique
+  (conhost, pas Windows Terminal) déclenche le mode « Sélection » qui met
+  en pause le processus en cours (l'install semblait figée sur
+  « Finalizing npm install. ») — appuyer sur **Échap** débloque.
+- `curl -fsSL .../prime-agent/install.sh | sh` détecte l'absence
+  d'installation Linux et propose de l'installer (`Install Prime Agent
+  v0.8.1 globally with npm? [Y/n]`), puis de préparer un runtime Python
+  dédié (`Prepare Python runtime now? [Y/n]`) — répondre Entrée/`Y` aux
+  deux.
+- Test décisif : `cd /mnt/c/Users/cbrun/OneDrive/Documents/automatisation-CBRUN
+  && prime-agent` → écran « Welcome to PRIME Agent / Press Enter to login
+  with Prime Intellect » directement, **sans le timeout `worker_auth`**.
+  Confirme le diagnostic (bug spécifique au TTY Win32 natif, absent sous
+  WSL).
+
+Prochaine étape : terminer le login (`Press Enter to login with Prime
+Intellect`), puis connecter le provider (Claude Pro ou Codex) si Prime
+Agent le permet après ce premier login.
 
 ## Contexte
 
