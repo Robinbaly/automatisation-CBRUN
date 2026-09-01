@@ -23,6 +23,24 @@ manuelle à chaque session.
   (tests unitaires internes à l'outil, pas utilisés par le skill lui-même)
   a été retiré pour ne garder que ce qui sert réellement à l'exécution.
 
+## find-skills
+
+- Source : https://github.com/vercel-labs/skills (dossier `skills/find-skills`)
+- Licence : MIT
+- Rôle : aide à chercher et installer des skills existants dans l'écosystème
+  ouvert (skills.sh) avant de coder une solution maison.
+- Récupéré le 01/09/2026.
+
+## Outils installés comme plugins (pas vendorés ici)
+
+Superpowers, ClaudeMem et les plugins officiels Anthropic (Stripe, Vercel,
+Resend, Shippo, security-guidance, Semgrep, LegalZoom) ne sont pas des
+dossiers `.claude/skills/` : ce sont des plugins déclarés dans
+`.claude/settings.json` (`enabledPlugins` + `extraKnownMarketplaces`), en
+scope projet. Claude Code les récupère automatiquement depuis leur
+marketplace GitHub à l'ouverture du dépôt — pas de vendoring nécessaire, mais
+ça suppose un accès réseau à GitHub en début de session.
+
 ## Mise à jour
 
 Ces skills évoluent côté auteur d'origine. Pour les rafraîchir, reclonez le
