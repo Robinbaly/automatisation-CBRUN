@@ -221,6 +221,60 @@ Deux options, par ordre de préférence :
 étant confirmé upstream et non lié à l'état local) ; attendre un correctif
 éditeur (l'issue est fermée "not planned", pas de délai annoncé).
 
+## Marche à suivre — migration vers WSL (à exécuter en local sur le MSI)
+
+### Phase 1 — PowerShell, en Administrateur
+
+```powershell
+wsl --status
+wsl -l -v
+```
+Si Ubuntu n'apparaît pas :
+```powershell
+wsl --install -d Ubuntu
+Restart-Computer
+```
+Au premier lancement d'Ubuntu après redémarrage : créer un utilisateur/mot
+de passe Unix (indépendant du compte Windows).
+
+### Phase 2 — dans le terminal Ubuntu (WSL)
+
+Node.js ≥ 22.8.0 requis par Prime Agent, via nvm :
+```bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+source ~/.bashrc
+nvm install 22
+node -v
+```
+Dépendances système + Prime Agent :
+```bash
+sudo apt update && sudo apt install -y python3 python3-pip build-essential
+curl -fsSL https://app.primeintellect.ai/prime-agent/install.sh | sh
+prime-agent --version
+```
+
+### Phase 3 — lancer Prime Agent sur le dossier de travail réel
+
+Le dossier Windows reste accessible depuis WSL :
+```bash
+cd /mnt/c/Users/cbrun/OneDrive/Documents/automatisation-CBRUN
+prime-agent
+```
+Test clé : sous WSL, vrai TTY Linux → hors du chemin de code cassé identifié
+en Windows natif (issue upstream #1923). Devrait démarrer sans timeout
+`worker_auth`. Une fois démarré : `/login` pour connecter le provider
+(Claude Pro ou Codex).
+
+### Si ça bloque encore sous WSL (imprévu)
+
+Repli headless :
+```bash
+prime-agent --print "dis bonjour"
+```
+Si même ça échoue sous WSL, c'est un cas nouveau, distinct du bug Windows
+natif déjà identifié — à documenter séparément avec le message d'erreur
+exact.
+
 ## Objectif
 
 ~~Identifier la cause racine du timeout `worker_auth` en mode interactif~~
