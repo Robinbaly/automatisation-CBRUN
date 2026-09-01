@@ -72,11 +72,17 @@ en parallèle sur différents morceaux d'une même demande.
 
 **Niveau 1 — répartition Claude / Codex**, selon la nature du sujet :
 - Reste avec Claude Code : compréhension de la demande, conception/
-  architecture, communication avec l'utilisateur, décisions métier CBRUN,
-  tâches courtes.
+  architecture, communication avec l'utilisateur, décisions métier CBRUN.
 - Part vers Codex : génération de code volumineuse ou répétitive,
   refactoring étendu, exécution de tests/scripts longs, tâches qui peuvent
   tourner en parallèle sans supervision constante.
+- **Pas d'exception pour les demandes courtes ou simples** : même une
+  demande basique doit donner lieu à une vraie répartition avec Codex (au
+  minimum une sous-tâche d'exécution ou de vérification qui lui revient),
+  pas un traitement 100% Claude par défaut. Objectif explicite : exercer le
+  mécanisme systématiquement pour affiner les critères réels à l'usage
+  (point encore ouvert plus bas), pas seulement le réserver aux grosses
+  tâches.
 - Objectif : équilibrer la charge entre le compte Claude Pro et le compte
   OpenAI pour économiser les tokens Claude et permettre des sessions plus
   longues.
