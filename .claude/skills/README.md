@@ -49,6 +49,18 @@ manuelle à chaque session.
   optimisation du tunnel d'achat panier/paiement (cro).
 - Récupéré le 01/09/2026.
 
+## pitch-deck-cbrun
+
+- Source : créé en interne (pas vendoré depuis un dépôt tiers — aucun skill
+  existant trouvé sur skills.sh/marketplaces pour ce besoin précis).
+- Rôle : structure et règles de design pour construire une présentation
+  commerciale des packs d'automatisation CBRUN (stock, traitement facture
+  fournisseur email/scan, interface de pilotage patron/responsable/employé,
+  pack RH) pour un client donné. Ne génère pas de fichier directement :
+  route vers le skill `pptx`, le connecteur MCP Canva, ou le skill `design`
+  selon le format de sortie choisi.
+- Ajouté le 08/09/2026.
+
 ## Outils installés comme plugins (pas vendorés ici)
 
 Superpowers, ClaudeMem et les plugins officiels Anthropic (Stripe, Vercel,
