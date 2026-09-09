@@ -17,26 +17,42 @@
 - **Cohérence** : même grille, mêmes espacements, même style d'icônes sur
   tout le deck. Ne pas changer de style visuel entre les packs.
 
-## Palette par défaut (pas d'identité de marque fournie)
+## Palette CBRUN réelle (identité de marque — priorité par défaut)
 
-Palette professionnelle sobre orientée tech/automatisation, à utiliser tant
-qu'aucune charte CBRUN ou client n'est fournie :
+Ce dépôt contient l'appli réelle CB-RUN Stock (`src/index.css`,
+`src/components/Layout.tsx`) : c'est l'identité de marque CBRUN, pas une
+supposition. Un pitch deck CBRUN doit partir de cette palette par défaut
+— pas d'une palette générique tech bleu/vert inventée sans contexte :
 
-- Fond clair : `#F8FAFC`
-- Fond sombre / slides de rupture (titre, CTA) : `#0F172A`
-- Couleur primaire (accents, titres, liens) : `#2563EB` (bleu)
-- Couleur secondaire (succès, gains, ROI positif) : `#16A34A` (vert)
-- Couleur d'alerte (points de douleur "avant") : `#DC2626` (rouge), usage
-  ponctuel uniquement — pas de slide entière en rouge.
-- Texte principal : `#0F172A` sur fond clair, `#F8FAFC` sur fond sombre.
-- Texte secondaire/légendes : `#64748B`.
+- Fond clair (crème, pas blanc pur) : `#FAF6F3`
+- Surface carte : `#FFFFFF` — surface alternative (bandeaux, cellules) :
+  `#FBEFEC`
+- Texte principal (brun-noir chaud, pas noir pur) : `#241715`
+- Texte secondaire/légendes : `#8A7570`
+- Bordures : `#ECDFDB`
+- Couleur primaire / accent d'action (nav, CTA, titres de rupture) :
+  `#A81330` (rouge) — variante appuyée pour fonds pleins (sidebar, slide
+  de titre/CTA) : `#6F0C21`
+- Succès / OK / gains : `#1F7A4D` (vert — c'est aussi la couleur du
+  logo CBD RUN, `public/logo-192.png`)
+- Avertissement : `#A6660A`
+- Critique/alerte : `#C81E3A`, usage ponctuel uniquement — pas de slide
+  entière dans cette couleur.
 
-Typographie : une police sans-serif géométrique/professionnelle (ex.
-Inter, Söhne, ou équivalent système comme -apple-system/Segoe UI selon le
-support), un seul poids "bold" pour les titres, "regular" pour le texte.
+Typographie (identique à l'appli, chargée depuis Google Fonts) :
+- Titres/display : **Fraunces** (serif, poids 500–700)
+- Texte courant : **IBM Plex Sans**
+- Données/labels/nombres (tabular-nums) : **IBM Plex Mono**
 
-Si le client ou CBRUN fournit un logo/charte, cette palette est remplacée
-par la charte fournie — ne pas mélanger les deux.
+Le logo CBRUN (`public/logo-192.png`, hexagone vert avec feuille) est
+disponible dans ce dépôt et peut être embarqué en base64 dans un artifact
+HTML ou une slide pptx.
+
+**Cette palette est le défaut pour tout pitch CBRUN**, y compris pour un
+client externe (ex. CBD Jaffar) — c'est l'identité de l'entreprise qui
+vend l'offre, pas celle du client. Ne la remplacer que si CBRUN fournit
+explicitement une nouvelle charte, ou si le client demande que le deck
+porte sa propre identité visuelle plutôt que celle de CBRUN.
 
 ## Charger dataviz pour les graphiques
 
